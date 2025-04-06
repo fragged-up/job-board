@@ -1,7 +1,5 @@
 "use client"
-
 import { useState } from "react"
-
 export default function JobForm({ onSubmit }: { onSubmit: () => void }) {
   const [company, setCompany] = useState("")
   const [position, setPosition] = useState("")
@@ -42,13 +40,13 @@ export default function JobForm({ onSubmit }: { onSubmit: () => void }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 bg-white p-6 rounded-xl shadow max-w-md mx-auto">
+    <form onSubmit={handleSubmit} className="flex flex-col font-sans gap-4  p-6 rounded-xl shadow max-w-md mx-auto">
       <input
         type="text"
         placeholder="Company"
         value={company}
         onChange={(e) => setCompany(e.target.value)}
-        className="p-2 border rounded text-gray-300 placeholder:text-black"
+        className="p-2 border rounded text-gray-700 placeholder:text-black"
         required
       />
       <input
@@ -56,7 +54,7 @@ export default function JobForm({ onSubmit }: { onSubmit: () => void }) {
         placeholder="Position"
         value={position}
         onChange={(e) => setPosition(e.target.value)}
-        className="p-2 border rounded text-gray-300 placeholder:text-black"
+        className="p-2 border rounded text-gray-700 placeholder:text-black"
         required
       />
       <input
@@ -64,7 +62,7 @@ export default function JobForm({ onSubmit }: { onSubmit: () => void }) {
         placeholder="Application Link"
         value={link}
         onChange={(e) => setLink(e.target.value)}
-        className="p-2 border rounded text-gray-300 placeholder:text-black"
+        className="p-2 border rounded text-gray-700 placeholder:text-black"
         required
       />
       <input
@@ -72,7 +70,7 @@ export default function JobForm({ onSubmit }: { onSubmit: () => void }) {
         placeholder="Password (for deletion)"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        className="p-2 border rounded text-gray-300 placeholder:text-black"
+        className="p-2 border rounded text-gray-700 placeholder:text-black"
         required
       />
       <button
