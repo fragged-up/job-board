@@ -1,43 +1,44 @@
 "use client";
 
 import { useState } from "react";
-import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/nextjs";
-import JobForm from "./components/JobForm";
-import JobList from "./components/JobList";
+import { SignedIn, SignedOut, SignInButton, useUser } from "@clerk/nextjs";
+import JobPostingForm from "./components/JobForm";
+import JobListing from "./components/JobList";
 
-export default function Home() {
-  const [refresh, setRefresh] = useState(0);
+const Page = () => {
+  const [refreshJobs, setRefreshJobs] = useState(0);
   const { user } = useUser();
 
   return (
-    <main className="min-h-screen imager py-10 px-4">
-      <header className="flex justify-between items-center max-w-4xl mx-auto mb-10">
-        <h1 className="text-3xl font-bold text-gray-800"> My Job Board</h1>
-
-        <SignedIn>
-          <UserButton />
-          <p>You're signed in!</p>
-        </SignedIn>
+    <div className="min-h-screen main-content">
+      <header className="py-10">
+        <h1 className="text-2xl md:text-3xl font-bold text-zinc-100">
+          <SignedIn>
+            <span className="font-semibold">{user?.firstName}'s </span>
+          </SignedIn>
+          Job Board
+        </h1>
       </header>
 
-      <SignedIn>
-        <div className="max-w-4xl mx-auto space-y-8">
-          <p className="text-gray-600">
-            Hello, <span className="font-semibold">{user?.firstName}</span> 👋
-          </p>
-          <JobForm onSubmit={() => setRefresh(refresh + 1)} />
-          <JobList refreshTrigger={refresh} />
-        </div>
-      </SignedIn>
+      <main className="space-y-8">
+        <SignedIn>
+          <JobPostingForm onSubmit={() => setRefreshJobs((prev) => prev + 1)} />
+          <JobListing refreshTrigger={refreshJobs} />
+        </SignedIn>
 
-      <SignedOut>
-        <div className="max-w-md mx-auto text-center bg-white p-6 rounded-xl shadow">
-          <h2 className="text-xl font-bold mb-4">Sign in to manage your job board</h2>
-          <SignInButton mode="modal">
-            <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">Sign In</button>
-          </SignInButton>
-        </div>
-      </SignedOut>
-    </main>
+        <SignedOut>
+          <div className="max-w-md mx-auto text-center bg-white p-6 rounded-xl shadow-md">
+            <h2 className="text-xl font-semibold mb-4 text-gray-800">Sign in to manage your job board</h2>
+            <SignInButton mode="modal">
+              <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition-colors">
+                Sign In
+              </button>
+            </SignInButton>
+          </div>
+        </SignedOut>
+      </main>
+    </div>
   );
-}
+};
+
+export default Page;

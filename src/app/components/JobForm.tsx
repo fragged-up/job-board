@@ -1,43 +1,45 @@
-"use client"
-import { useState } from "react"
+"use client";
+
+import { useState } from "react";
+
 export default function JobForm({ onSubmit }: { onSubmit: () => void }) {
-  const [company, setCompany] = useState("")
-  const [position, setPosition] = useState("")
-  const [link, setLink] = useState("")
-  const [password, setPassword] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [company, setCompany] = useState("");
+  const [position, setPosition] = useState("");
+  const [link, setLink] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const isValidURL = (url: string) => {
     try {
-      new URL(url)
-      return true
+      new URL(url);
+      return true;
     } catch {
-      return false
+      return false;
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (!company || !position || !link || !password || !isValidURL(link)) {
-      alert("Please fill all fields correctly")
-      return
+      alert("Please fill all fields correctly");
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     await fetch("/api/jobs", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ company, position, link, password }),
-    })
+    });
 
-    setCompany("")
-    setPosition("")
-    setLink("")
-    setPassword("")
-    onSubmit()
-    setLoading(false)
-  }
+    setCompany("");
+    setPosition("");
+    setLink("");
+    setPassword("");
+    onSubmit();
+    setLoading(false);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col font-sans gap-4  p-6 rounded-xl shadow max-w-md mx-auto">
@@ -46,7 +48,7 @@ export default function JobForm({ onSubmit }: { onSubmit: () => void }) {
         placeholder="Company"
         value={company}
         onChange={(e) => setCompany(e.target.value)}
-        className="p-2 border rounded text-gray-700 placeholder:text-black"
+        className="form-input"
         required
       />
       <input
@@ -54,7 +56,7 @@ export default function JobForm({ onSubmit }: { onSubmit: () => void }) {
         placeholder="Position"
         value={position}
         onChange={(e) => setPosition(e.target.value)}
-        className="p-2 border rounded text-gray-700 placeholder:text-black"
+        className="form-input"
         required
       />
       <input
@@ -62,17 +64,10 @@ export default function JobForm({ onSubmit }: { onSubmit: () => void }) {
         placeholder="Application Link"
         value={link}
         onChange={(e) => setLink(e.target.value)}
-        className="p-2 border rounded text-gray-700 placeholder:text-black"
+        className="form-input"
         required
       />
-      <input
-        type="password"
-        placeholder="Password (for deletion)"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="p-2 border rounded text-gray-700 placeholder:text-black"
-        required
-      />
+
       <button
         type="submit"
         disabled={loading}
@@ -81,5 +76,5 @@ export default function JobForm({ onSubmit }: { onSubmit: () => void }) {
         {loading ? "Posting..." : "Post Job"}
       </button>
     </form>
-  )
+  );
 }
